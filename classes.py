@@ -10,7 +10,7 @@ class Livro:
 livro1 = Livro("Dom Casmurro", "Machado de Assis", "Romance")
 livro2 = Livro("Memórias Póstumas de Brás Cubas", "Machado de Assis", "Romance")
 livro3 = Livro("Quincas Borba", "Machado de Assis", "Romance")
-livro4 = Livro("Drácula", "Frankenstein", "Terror")
+livro4 = Livro("Frankenstein", "mary Shelley", "Terror")
 livro5 = Livro("Drácula", "Bram Stoker", "Terror")
 livro6 = Livro("Evangelho de Sangue", "Clive Barker", "Terror")
 livro7 = Livro("Morangos Mofados", "Caio Fernando Abreu", "Contos")
