@@ -31,3 +31,7 @@ livro22 = Livro("O Diário de Anne Frank", "Anne Frank", "História")
 livro23 = Livro("Sapiens: Uma Breve História da Humanidade", "Yuval Noah Harari", "História")
 livro24 = Livro("Diário de um banana", "Jeff Kinney", "Infanto Juvenil")
 livro25 = Livro("As Crônicas de Nárnia", "C. S. Lewis", "Infanto Juvenil")
+livro26 = Livro("Pedagogia do oprimido", "Paulo Freire", "Filosofia")
+livro27 = Livro("Tópicos", "Aristóteles", "Filosofia")
+livro28 = Livro("Crítica da razão pura", "Emanuel Kant", "Filosofia")
+
