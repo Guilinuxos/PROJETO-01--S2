@@ -1,12 +1,36 @@
 class Livro:
-    def __init__(self, titulo, autor, gênero, ano, editora,):
+    def __init__(self, titulo, autor, genero, ano, editora,):
         self.__título = titulo
         self.__autor = autor
-        self.__gênero = gênero
+        self.__genero = genero
         self.__ano = ano
         self.__editora = editora
         self.__disponivel = True
 
+    def get_Titulo(self):
+        return self.__titulo
+    
+    def get_Disponivel(self):
+        return self.__disponivel
+    
+    def get_Genero(self):
+        return self.__genero
+    
+    def emprestar(self):
+        if self.__disponivel:
+            self.__disponivel = False
+            print(f"O título {self.__titulo} foi emprestado. Redirecionando para a página inicial da biblioteca...")
+        else:
+            print(f"Não foi possível emprestar o título {self.__titulo}. O objeto pode ter sido obstruído ou já está sendo emprestado.")
+    
+    def devolver(self):
+        if not self.__disponivel:
+            self.__disponivel = True
+            print(f"O título {self.__titulo} foi devolvido. Redirecionando para a página inicial da biblioteca...")
+        else:
+            print(f"Não foi possível devolver o título {self.__titulo}. O objeto não foi encontrado em sua lista de livros emprestados.")
+
+# ==================== Livros
 livro1 = Livro("Dom Casmurro", "Machado de Assis", "Romance", 1899)
 livro2 = Livro("Memórias Póstumas de Brás Cubas", "Machado de Assis", "Romance", 1881)
 livro3 = Livro("Quincas Borba", "Machado de Assis", "Romance", 1891)
