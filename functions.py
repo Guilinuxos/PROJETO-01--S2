@@ -1,8 +1,3 @@
-# ==================== Sair
-
-
-
-
 # ==================== Conferir livros alugados
 
 
@@ -36,4 +31,7 @@ def menu():
         elif menu_question == 2:
             pass
         elif menu_question == 3:
-            pass
+            print("Saindo...")
+            os.system("pause")
+            os.system("cls")
+            break
