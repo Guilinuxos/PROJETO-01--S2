@@ -45,20 +45,33 @@ def acervo():
 # ==================== Menu Principal
 
 def menu():
+    forma_login = ["Bibliotecario", "Visitante"]
     menu_options = ["Acessar acervo", "Conferir livros alugados", "Sair"]
 
     while True:
         print("=== Bem-vindo à biblioteca ===")
         number = 1
 
+        for login in forma_login:
+            print(f"{number}. {forma_login}")
+            number+=1
+
+        login_escolhido = int(input("Como você gostaria de entrar?\n\n--> "))
+        if login_escolhido == 1:
+            print(f"Você entrou como {forma_login[0]}")
+            login = forma_login[0]
+        elif login_escolhido == 2:
+            print(f"Você entrou como {forma_login[1]}")
+            login = forma_login[1]
+
         for opcao in menu_options:
             print(f"{number}. {opcao}\n")
             number += 1
-        menu_question = int(input("O que você gostaria de fazer?\n\n--> "))
+        menu_question = int(input(f"O que você gostaria de fazer?\n\n--> "))
 
         if menu_question > 3 or menu_question < 1:
-            while menu_question > 3 or menu_question < 1:
-                print("Escolha uma opção disponível")
+            while menu_question > 3 or menu_question < 1: #Fazer mostrar opções diferentes aqui dependendo do tipo de login que você escolheu anteriormente (Bibliotecario ou Visitante)
+                print(f"{login}\nEscolha uma opção disponível")
                 menu_question = int(input("--> "))
         elif menu_question == 1:
             pass
