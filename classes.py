@@ -83,3 +83,32 @@ class Bibliotecário:
         if gênero in acervo and livro in acervo[gênero]:
             acervo[gênero].remove(livro)
             print(f"O livro '{livro.get_Titulo()} foi removido do acervo")
+
+
+
+class Visitante:
+    def __init__(self, nome): #Atributo do objeto (nome).
+        self.__nome = nome
+        self.__livros_emprestados = []
+    def ver_livros_emprestados(self):
+        if not self.__livros_emprestados:
+            print(f"O visitante {self.__nome} não possui livros emprestados.")
+        else:
+            print(f"Livros emprestados por {self.__nome}:")
+            for livro in self.__livros_emprestados:
+                print(f" - {livro.get_Titulo()}")
+    def emprestar_livro(self, livro):
+        self.__livros_emprestados.append(livro)
+        print(f"O visitante {self.__nome} emprestou o livro '{livro.get_Titulo()}'.")
+    def devolver_livro(self, livro):
+        if livro in self.__livros_emprestados:
+            self.__livros_emprestados.remove(livro)
+            print(f"O visitante {self.__nome} devolveu o livro '{livro.get_Titulo()}'.")
+        else:
+            print(f"O visitante {self.__nome} não possui o livro '{livro.get_Titulo()}' emprestado.")
+    def reservar_livro(self, livro):
+        if livro not in self.__livros_emprestados:
+            self.__livros_emprestados.append(livro)
+            print(f"O visitante {self.__nome} reservou o livro '{livro.get_Titulo()}'.")
+        else:
+            print(f"O visitante {self.__nome} já possui o livro '{livro.get_Titulo()}' emprestado.")
