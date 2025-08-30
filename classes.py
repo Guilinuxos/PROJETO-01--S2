@@ -66,3 +66,20 @@ livro25 = Livro("As Crônicas de Nárnia", "C. S. Lewis", "Infanto Juvenil", 195
 livro26 = Livro("Pedagogia do Oprimido", "Paulo Freire", "Filosofia", 1968)
 livro27 = Livro("Tópicos", "Aristóteles", "Filosofia", -350)  
 livro28 = Livro("Crítica da Razão Pura", "Immanuel Kant", "Filosofia", 1781)
+#-----------------------------//---------------------------------------------------
+class Bibliotecário:
+    def __init__(self, nome): #Atributo do objeto (nome).
+        self.__nome = nome
+    def ver_acervo(self, acervo): #Método para visualizar o acervo da biblioteca.
+        for livro in acervo:
+            print(f"Título: {livro.get_Titulo()};\nAutor: {livro.get_Autor()};\nGênero: {livro.get_Genero()};\nAno: {livro.get_Ano()};\nDisponível: {livro.get_Disponivel()}")
+    def adicionar_livro(self, acervo, gênero, livro): #Método para adicionar um livro ao acervo.
+        if gênero in acervo:
+            acervo[gênero].append(livro)
+        else:
+            acervo[gênero] = [livro]
+        print(f"O livro '{livro.get_Titulo()}' foi adicionado ao acervo.")
+    def remover_livro(self, acervo, gênero, livro): #Método para remoção de um livro
+        if gênero in acervo and livro in acervo[gênero]:
+            acervo[gênero].remove(livro)
+            print(f"O livro '{livro.get_Titulo()} foi removido do acervo")
