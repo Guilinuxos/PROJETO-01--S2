@@ -2,14 +2,41 @@ import os
 import time
 from classes import *
 
+admin_menu_options = ["Acessar acervo", "Adicionar livros", "Remover Livros", "Alterar informações de livros", "Sair"]
+visit_menu_options = ["Acessar acervo", "Conferir livros alugados", "Sair"]
+lista_de_livros = [livro1, livro2, livro3, livro4, livro5, livro6, livro7, livro8, livro9, livro10, livro11, livro12, livro13, livro14, livro15, livro16, livro17, livro18, livro19, livro20, livro21, livro22]
+    
+
 # ==================== Conferir livros alugados
+def check_rented():
+    print("Livros alugados:")
+    for livro in lista_de_livros:
+        if livro.get_disponivel == False:
+            print(livro)
+        else:
+            pass
 
+# ==================== Alugar livro
+def rent_book(visitante):
 
-
+    quest = int(input("Gostaria de alugar um livro?\n1. Sim\n2. Não\n\n--> "))
+    if quest == 1:
+        rent_book = input("Escolha e escreva o título do livro da lista acima para alugar\n\n--> ")
+        for livro in lista_de_livros:
+            if livro.get_Titulo.lower() == rent_book.lower():
+                visitante.emprestar_livro(livro)
+                livro.emprestar()
+            else:
+                print("O título não foi encontrado")
+    elif quest == 2:
+        print("Retornando à página inicial...")
+        
 
 # ==================== Acessar biblioteca
 
-def acervo():
+
+
+def acervo(visitante):
     generos_livros = {
         1: "Romance",
         2: "Terror",
@@ -21,12 +48,10 @@ def acervo():
         8: "Infanto Juvenil"
     }
 
-
-    lista_de_livros = [livro1, livro2, livro3, livro4, livro5, livro6, livro7, livro8, livro9, livro10, livro11, livro12, livro13, livro14, livro15, livro16, livro17, livro18, livro19, livro20, livro21, livro22]
     
     while True:
         number = 1
-        print("=== Bem vindo à biblioteca ===")
+        print("Acessando acervo...")
         print("Gêneros disponíveis:")
         for chave, genero in generos_livros.items():
             print(f"{chave}. {genero}")
@@ -40,16 +65,45 @@ def acervo():
                 number +=1
             else:
                 pass
+        rent_book(visitante)
+        
 
+# ==================== Menu Visitante
+def visitor_menu(visitante):
+    while True:
+        number= 1
+        print("=== Bem-vindo visitante ===")
+        
+        for opcao in visit_menu_options:
+                print(f"{number}. {opcao}\n")
+                number += 1
+        menu_question = int(input(f"O que você gostaria de fazer?\n\n--> "))
+        if menu_question == 1:
+            acervo(visitante)
+        elif menu_question == 2:
+            pass
+        elif menu_question == 3:
+            print("Voltando à tela inicial")
+            break
+        
+        
+# ==================== Cadastrando a pessoa
+
+def cadastro():
+    nome = input("Qual seu nome?\n\n--> ")
+    visitante = Visitante(nome)
+    return visitante
+    
 
 # ==================== Menu Principal
 
 def menu():
     forma_login = ["Bibliotecario", "Visitante"]
-    menu_options = ["Acessar acervo", "Conferir livros alugados", "Sair"]
+    visitante = cadastro()
 
     while True:
         print("=== Bem-vindo à biblioteca ===")
+
         number = 1
 
         for login in forma_login:
@@ -64,21 +118,7 @@ def menu():
             print(f"Você entrou como {forma_login[1]}")
             login = forma_login[1]
 
-        for opcao in menu_options:
-            print(f"{number}. {opcao}\n")
-            number += 1
-        menu_question = int(input(f"O que você gostaria de fazer?\n\n--> "))
-
-        if menu_question > 3 or menu_question < 1:
-            while menu_question > 3 or menu_question < 1: #Fazer mostrar opções diferentes aqui dependendo do tipo de login que você escolheu anteriormente (Bibliotecario ou Visitante)
-                print(f"{login}\nEscolha uma opção disponível")
-                menu_question = int(input("--> "))
-        elif menu_question == 1:
+        if login_escolhido == 1:
             pass
-        elif menu_question == 2:
-            pass
-        elif menu_question == 3:
-            print("Saindo...")
-            os.system("pause")
-            os.system("cls")
-            break
+        elif login_escolhido == 2:
+            visitor_menu(visitante)
