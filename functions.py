@@ -1,35 +1,56 @@
 import os
-import time
 from classes import *
 
 admin_menu_options = ["Acessar acervo", "Adicionar livros", "Remover Livros", "Alterar informações de livros", "Sair"]
 visit_menu_options = ["Acessar acervo", "Conferir livros alugados", "Sair"]
 lista_de_livros = [livro1, livro2, livro3, livro4, livro5, livro6, livro7, livro8, livro9, livro10, livro11, livro12, livro13, livro14, livro15, livro16, livro17, livro18, livro19, livro20, livro21, livro22]
-    
+
 
 # ==================== Conferir livros alugados
 def check_rented():
-    print("Livros alugados:")
-    for livro in lista_de_livros:
-        if livro.get_disponivel == False:
-            print(livro)
+    while True:
+        rented_books = []
+        counter = 0
+        number = 1
+        for livro in lista_de_livros:
+            if not livro.get_Disponivel():
+                rented_books.append(livro)
+                counter+=1
+        if not rented_books:
+            print("Nenhum livro foi alugado até o momento.")
         else:
-            pass
+            for livro in rented_books:
+                print(f"{number}. {livro.get_Titulo()}")
+                number+=1
+        break
+        
 
 # ==================== Alugar livro
 def rent_book(visitante):
+    while True:
+        found_book = False
+        quest = int(input("Gostaria de alugar um livro?\n1. Sim\n2. Não\n\n--> "))
+        if quest == 1:
+            rent_book = input("Escolha e escreva o título do livro da lista acima para alugar\n\n--> ")
 
-    quest = int(input("Gostaria de alugar um livro?\n1. Sim\n2. Não\n\n--> "))
-    if quest == 1:
-        rent_book = input("Escolha e escreva o título do livro da lista acima para alugar\n\n--> ")
-        for livro in lista_de_livros:
-            if livro.get_Titulo.lower() == rent_book.lower():
-                visitante.emprestar_livro(livro)
-                livro.emprestar()
-            else:
-                print("O título não foi encontrado")
-    elif quest == 2:
-        print("Retornando à página inicial...")
+            for livro in lista_de_livros:
+                if rent_book.lower() == livro.get_Titulo().lower():
+                    found_book = True
+
+                    if livro.get_Disponivel():
+                        visitante.emprestar_livro(livro)
+                        livro.emprestar()
+                        break
+                    else:
+                        print("O livro já está sendo alugado")
+                    break
+
+            if found_book == False:
+                print("O livro já está sendo alugado ou não existe")    
+
+        elif quest == 2:
+            print("Retornando à página inicial...")
+            break
         
 
 # ==================== Acessar biblioteca
@@ -66,10 +87,40 @@ def acervo(visitante):
             else:
                 pass
         rent_book(visitante)
+        break
         
 
+
+# ==================== Menu Bibliotecário
+def bible_menu():
+    while True:
+        number = 1
+        print("=== Bem-vindo bibliotecário ===")
+
+        for opcao in admin_menu_options:
+            print(f"{number}. {opcao}\n")
+            number+=1
+
+        menu_question = int(input("O que você gostaria de fazer?\n\n--> "))
+        if menu_question == 1:
+            pass
+        elif menu_question == 2:
+            pass
+        elif menu_question == 3:
+            pass
+        elif menu_question == 4:
+            pass
+        elif menu_question == 5:
+            print("Saindo...")
+            break
+
+
+
+
+
+
 # ==================== Menu Visitante
-def visitor_menu(visitante):
+def visitor_menu(visitante: Visitante):
     while True:
         number= 1
         print("=== Bem-vindo visitante ===")
@@ -80,13 +131,23 @@ def visitor_menu(visitante):
         menu_question = int(input(f"O que você gostaria de fazer?\n\n--> "))
         if menu_question == 1:
             acervo(visitante)
+            
         elif menu_question == 2:
-            pass
+            visitante.devolver_livro()
+
         elif menu_question == 3:
             print("Voltando à tela inicial")
             break
         
-        
+
+
+
+
+
+
+
+
+
 # ==================== Cadastrando a pessoa
 
 def cadastro():
