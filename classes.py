@@ -1,10 +1,9 @@
 class Livro:
-    def __init__(self, titulo, autor, genero, ano, editora,):
-        self.__título = titulo
+    def __init__(self, titulo, autor, genero, ano):
+        self.__titulo = titulo
         self.__autor = autor
         self.__genero = genero
         self.__ano = ano
-        self.__editora = editora
         self.__disponivel = True
 
     def get_Titulo(self):
@@ -66,19 +65,24 @@ livro25 = Livro("As Crônicas de Nárnia", "C. S. Lewis", "Infanto Juvenil", 195
 livro26 = Livro("Pedagogia do Oprimido", "Paulo Freire", "Filosofia", 1968)
 livro27 = Livro("Tópicos", "Aristóteles", "Filosofia", -350)  
 livro28 = Livro("Crítica da Razão Pura", "Immanuel Kant", "Filosofia", 1781)
+
 #-----------------------------//---------------------------------------------------
+
 class Bibliotecário:
     def __init__(self, nome): #Atributo do objeto (nome).
         self.__nome = nome
+
     def ver_acervo(self, acervo): #Método para visualizar o acervo da biblioteca.
         for livro in acervo:
             print(f"Título: {livro.get_Titulo()};\nAutor: {livro.get_Autor()};\nGênero: {livro.get_Genero()};\nAno: {livro.get_Ano()};\nDisponível: {livro.get_Disponivel()}")
     def adicionar_livro(self, acervo, gênero, livro): #Método para adicionar um livro ao acervo.
+
         if gênero in acervo:
             acervo[gênero].append(livro)
         else:
             acervo[gênero] = [livro]
         print(f"O livro '{livro.get_Titulo()}' foi adicionado ao acervo.")
+
     def remover_livro(self, acervo, gênero, livro): #Método para remoção de um livro
         if gênero in acervo and livro in acervo[gênero]:
             acervo[gênero].remove(livro)
@@ -90,6 +94,7 @@ class Visitante:
     def __init__(self, nome): #Atributo do objeto (nome).
         self.__nome = nome
         self.__livros_emprestados = []
+
     def ver_livros_emprestados(self):
         if not self.__livros_emprestados:
             print(f"O visitante {self.__nome} não possui livros emprestados.")
@@ -97,15 +102,18 @@ class Visitante:
             print(f"Livros emprestados por {self.__nome}:")
             for livro in self.__livros_emprestados:
                 print(f" - {livro.get_Titulo()}")
+
     def emprestar_livro(self, livro):
         self.__livros_emprestados.append(livro)
         print(f"O visitante {self.__nome} emprestou o livro '{livro.get_Titulo()}'.")
+
     def devolver_livro(self, livro):
         if livro in self.__livros_emprestados:
             self.__livros_emprestados.remove(livro)
             print(f"O visitante {self.__nome} devolveu o livro '{livro.get_Titulo()}'.")
         else:
             print(f"O visitante {self.__nome} não possui o livro '{livro.get_Titulo()}' emprestado.")
+
     def reservar_livro(self, livro):
         if livro not in self.__livros_emprestados:
             self.__livros_emprestados.append(livro)
