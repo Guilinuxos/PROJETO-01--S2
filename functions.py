@@ -107,7 +107,7 @@ def menu():
         number = 1
 
         for login in forma_login:
-            print(f"{number}. {forma_login}")
+            print(f"{number}. {login}")
             number+=1
 
         login_escolhido = int(input("Como você gostaria de entrar?\n\n--> "))
