@@ -7,7 +7,7 @@ class Livro:
         self.__disponivel = True
 
     def get_Titulo(self):
-        return self.__titul
+        return self.__titulo
     
     def get_Disponivel(self):
         return self.__disponivel
@@ -33,7 +33,7 @@ class Livro:
     def set_Genero(self, novogenero):
         self.__genero = novogenero
     
-    def set__Ano(self, novoano):
+    def set_Ano(self, novoano):
         self.__ano = novoano
     
     def emprestar(self):
