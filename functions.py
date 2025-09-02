@@ -30,10 +30,14 @@ def check_rented(visitante = None):
 
         if not rented_books:
             print("Nenhum livro foi alugado até o momento")
+            os.system("pause")
+            os.system("cls")
         else:
             for livro in rented_books:
                 print(f"{number}: {livro.get_Titulo()}")
                 number += 1
+            os.system("pause")
+            os.system("cls")
 
         
 
@@ -43,6 +47,8 @@ def rent_book(visitante):
     if visitante.get_qtde_livros() >= 2:
         print("Você já atingiu o limite de 2 livros")
         print("Devolva um livro para pegar outro")
+        os.system("pause")
+        os.system("cls")
         return
     
     while True:
@@ -61,10 +67,14 @@ def rent_book(visitante):
                             return
                         break
             if not found_book:
-                print("Livro não encontrado")    
+                print("Livro não encontrado")  
+                os.system("pause")
+                os.system("cls")  
 
         elif quest == 2:
             print("Retornando à página inicial...")
+            os.system("pause")
+            os.system("cls")
             break
         
 
@@ -89,6 +99,8 @@ def showacervo(visitante=None):
                 status = "Indisponível"
             print(f"- {livro.get_Titulo()} | {livro.get_Autor()} | {livro.get_Ano()} | {status}")
         print()
+        os.system("pause")
+        os.system("cls")
     
     if visitante:
         rent_book(visitante)
@@ -219,6 +231,8 @@ def book_book():
         for livro in alugados:
             print(f"{number}: {livro.get_Titulo()} - {livro.get_Genero()}")
             number += 1
+    os.system("pause")
+    os.system("cls")
 
 
 
@@ -226,6 +240,8 @@ def book_book():
 def devolver_livro_menu(visitante: Visitante):
     if visitante.get_qtde_livros() == 0:
         print("Você não tem livros para devolver.")
+        os.system("pause")
+        os.system("cls")
         return
     
     print("=== SEUS LIVROS ALUGADOS ===")
@@ -246,8 +262,12 @@ def devolver_livro_menu(visitante: Visitante):
         livro = livros[1]
         visitante.devolver_livro(livro)  # ← Aqui sim passa um livro
         livro.devolver()
+        os.system("pause")
+        os.system("cls")
     else:
         print("Número inválido.")
+        os.system("pause")
+        os.system("cls")
 
 
 # ==================== Menu Visitante
@@ -305,13 +325,21 @@ def menu():
         login_escolhido = int(input("Como você gostaria de entrar?\n\n--> "))
         if login_escolhido == 1:
             print(f"Você entrou como {forma_login[0]}")
+            os.system("pause")
+            os.system("cls")
             login = forma_login[0]
         elif login_escolhido == 2:
             visitor_menu(visitante)
             print(f"Você entrou como {forma_login[1]}")
+            os.system("pause")
+            os.system("cls")
             login = forma_login[1]
 
         if login_escolhido == 1:
+            os.system("pause")
+            os.system("cls")
             bible_menu()
         elif login_escolhido == 2:
+            os.system("pause")
+            os.system("cls")
             visitor_menu(visitante)
