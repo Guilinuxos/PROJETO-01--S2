@@ -7,7 +7,7 @@ class Livro:
         self.__disponivel = True
 
     def get_Titulo(self):
-        return self.__titulo
+        return self.__titul
     
     def get_Disponivel(self):
         return self.__disponivel
@@ -20,6 +20,21 @@ class Livro:
     
     def get_Ano(self):
         return self.__ano
+    
+    def set_Titulo(self, novotitulo):
+        self.__titulo = novotitulo
+
+    def set_Disponivel(self, status):
+        self.__disponivel = status
+    
+    def set_Autor(self, novoautor):
+        self.__autor = novoautor
+    
+    def set_Genero(self, novogenero):
+        self.__genero = novogenero
+    
+    def set__Ano(self, novoano):
+        self.__ano = novoano
     
     def emprestar(self):
         if self.__disponivel:
@@ -93,6 +108,9 @@ class Bibliotecário:
         if gênero in acervo and livro in acervo[gênero]:
             acervo[gênero].remove(livro)
             print(f"O livro '{livro.get_Titulo()} foi removido do acervo")
+
+    def get_nome(self):
+        return self.__nome
 
 
 
