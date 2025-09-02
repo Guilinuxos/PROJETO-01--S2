@@ -223,7 +223,7 @@ def book_book():
 
 
 # ==================== Devolução
-def devolver_livro_menu(visitante):
+def devolver_livro_menu(visitante: Visitante):
     if visitante.get_qtde_livros() == 0:
         print("Você não tem livros para devolver.")
         return
@@ -283,9 +283,6 @@ def visitor_menu(visitante: Visitante):
 
 def cadastro():
     nome = input("Qual seu nome?\n\n--> ")
-    CPF = int(input("Qual o seu CPF?\n\n-->"))
-    while len(CPF) != 11:
-            CPF = int(input("Qual o seu CPF?\n\n-->"))
     visitante = Visitante(nome)
     return visitante
     
