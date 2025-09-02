@@ -1,347 +1,160 @@
-import os
-from classes import *
+class Livro:
+    def __init__(self, titulo, autor, genero, ano):
+        self.__titulo = titulo
+        self.__autor = autor
+        self.__genero = genero
+        self.__ano = ano
+        self.__disponivel = True
 
-admin_menu_options = ["Acessar acervo", "Adicionar livros", "Remover Livros", "Alterar informações de livros", "Ver livros alugados", "Sair"]
-visit_menu_options = ["Acessar acervo", "Conferir livros alugados", "Sair"]
-acervo = {
-    "Romance": [livro1, livro2, livro3],
-    "Terror": [livro4, livro5, livro6],
-    "Contos": [livro7, livro8, livro9],
-    "Poesia": [livro10, livro11, livro13],
-    "Ação": [livro14, livro15, livro16],
-    "Filosofia": [livro17, livro18, livro19, livro20, livro21, livro26, livro27, livro28],
-    "História": [livro22, livro23],
-    "Infanto Juvenil": [livro24, livro25]
-}
-# ==================== Conferir livros alugados
-def check_rented(visitante = None):
-    if visitante:
-        visitante.ver_livros_emprestados()
-    else:
-        rented_books = []
-        number = 1
+    def get_Titulo(self):
+        return self.__titulo
+    
+    def get_Disponivel(self):
+        return self.__disponivel
+    
+    def get_Genero(self):
+        return self.__genero
+    
+    def get_Autor(self):
+        return self.__autor
+    
+    def get_Ano(self):
+        return self.__ano
+    
+    def set_Titulo(self, novotitulo):
+        self.__titulo = novotitulo
 
-        print("Todos os livros alugados\n")
-
-        for genero in acervo.values():
-            for livro in genero:
-                if not livro.get_Disponivel():
-                    rented_books.append(livro)
-
-        if not rented_books:
-            print("Nenhum livro foi alugado até o momento")
-            os.system("pause")
-            os.system("cls")
+    def set_Disponivel(self, status):
+        self.__disponivel = status
+    
+    def set_Autor(self, novoautor):
+        self.__autor = novoautor
+    
+    def set_Genero(self, novogenero):
+        self.__genero = novogenero
+    
+    def set_Ano(self, novoano):
+        self.__ano = novoano
+    
+    def emprestar(self):
+        if self.__disponivel:
+            self.__disponivel = False
+            print(f"O título {self.__titulo} foi emprestado. Redirecionando para a página inicial da biblioteca...")
         else:
-            for livro in rented_books:
-                print(f"{number}: {livro.get_Titulo()}")
-                number += 1
-            os.system("pause")
-            os.system("cls")
-
-        
-
-# ==================== Alugar livro
-def rent_book(visitante):
-
-    if visitante.get_qtde_livros() >= 2:
-        print("Você já atingiu o limite de 2 livros")
-        print("Devolva um livro para pegar outro")
-        os.system("pause")
-        os.system("cls")
-        return
+            print(f"Não foi possível emprestar o título {self.__titulo}. O objeto pode ter sido obstruído ou já está sendo emprestado.")
     
-    while True:
-        found_book = False
-        quest = int(input("Gostaria de alugar um livro?\n1. Sim\n2. Não\n\n--> "))
-        if quest == 1:
-            rent_book_title = input("Escolha e escreva o título do livro da lista acima para alugar\n\n--> ")
-
-            for genero in acervo.values():
-                for livro in genero:
-                    if rent_book_title.lower() == livro.get_Titulo() .lower():
-                        found_book = True
-                        if livro.get_Disponivel():
-                            visitante.emprestar_livro(livro)
-                            livro.emprestar()
-                            return
-                        break
-            if not found_book:
-                print("Livro não encontrado")  
-                os.system("pause")
-                os.system("cls")  
-
-        elif quest == 2:
-            print("Retornando à página inicial...")
-            os.system("pause")
-            os.system("cls")
-            break
-        
-
-# ==================== Acessar biblioteca
-
-
-
-def showacervo(visitante=None):
-
-    if visitante:
-        print(f"Seus livros alugados: {visitante.get_qtde_livros()})")
-
-    print("Acervo da biblioteca:\n")
-    for genero, livros in acervo.items():
-        print(f"== {genero} ==")
-        if not livros:
-            print("Nenhum livro cadastrado")
-        for livro in livros:
-            if livro.get_Disponivel():
-                status = "Disponível"
-            else:
-                status = "Indisponível"
-            print(f"- {livro.get_Titulo()} | {livro.get_Autor()} | {livro.get_Ano()} | {status}")
-        print()
-    os.system("pause")
-    os.system("cls")
-    
-    if visitante:
-        rent_book(visitante)
-        
-
-
-# ==================== Menu Bibliotecário
-def bible_menu():
-    while True:
-        number = 1
-        print("=== Bem-vindo bibliotecário ===")
-
-        for opcao in admin_menu_options:
-            print(f"{number}. {opcao}")
-            number += 1
-
-        menu_question = int(input("\nO que você gostaria de fazer?\n\n--> "))
-        
-        if menu_question == 1:
-            showacervo()  # Acessar acervo
-            
-        elif menu_question == 2:
-            add_livro()  # Adicionar livros
-            
-        elif menu_question == 3:
-            remover_livro()  # Remover Livros
-            
-        elif menu_question == 4:
-            alterar_livro()  # Alterar informações de livros
-            
-        elif menu_question == 5:
-            book_book()  # Ver livros alugados
-            
-        elif menu_question == 6: #sair
-            print("Saindo...")
-            break
-            
+    def devolver(self):
+        if not self.__disponivel:
+            self.__disponivel = True
+            print(f"O título {self.__titulo} foi devolvido. Redirecionando para a página inicial da biblioteca...")
         else:
-            print("Opção inválida. Tente novamente.")
-# ==================== Add Livro
-def add_livro():                      
-    print("Adicionar novo livro")
-    titulo = input("Título:")
-    autor = input("Autor:")
-    genero = input("Gênero:")
-    ano = int(input("Ano:"))
+            print(f"Não foi possível devolver o título {self.__titulo}. O objeto não foi encontrado em sua lista de livros emprestados.")
 
-    novo_livro = Livro(titulo, autor, genero, ano)
+# ==================== Livros
+livro1 = Livro("Dom Casmurro", "Machado de Assis", "Romance", 1899)
+livro2 = Livro("Memórias Póstumas de Brás Cubas", "Machado de Assis", "Romance", 1881)
+livro3 = Livro("Quincas Borba", "Machado de Assis", "Romance", 1891)
 
-    if genero in acervo:
-        acervo[genero].append(novo_livro)
-    else:
-        acervo[genero] = [novo_livro]
+livro4 = Livro("Frankenstein", "Mary Shelley", "Terror", 1818)
+livro5 = Livro("Drácula", "Bram Stoker", "Terror", 1897)
+livro6 = Livro("Evangelho de Sangue", "Clive Barker", "Terror", 1996)
 
-    print(f"Livro '{titulo}' adicionado ao acervo")
+livro7 = Livro("Morangos Mofados", "Caio Fernando Abreu", "Contos", 1982)
+livro8 = Livro("O Alienista", "Machado de Assis", "Contos", 1882)
+livro9 = Livro("O Cartomante", "Machado de Assis", "Contos", 1884)
 
-# ==================== Remover Livro
-def remover_livro():
-    print("Remover Livro")
-    titulo = input("Digite o título do livro a ser removido:")
+livro10 = Livro("Marília de Dirceu", "Tomás Antônio Gonzaga", "Poesia", 1792)
+livro11 = Livro("Toda Poesia", "Paulo Leminski", "Poesia", 2013)
+livro12 = Livro("Os Lusíadas", "Luís de Camões", "Poesia", 1572)
+livro13 = Livro("Alguma Poesia", "Carlos Drummond de Andrade", "Poesia", 1930)
 
-    for genero, livros in acervo.items():
-        for livro in livros:
-            if livro.get_Titulo().lower() == titulo.lower():
-                livros.remove(livro)
-                print(f"Livro '{titulo}' removido")
-                return
-    print("Livro não encontrado")
-# ==================== Alterar Livro
-def alterar_livro():    
-    print("Alterar informações do livro")
-    titulo = input("Digite o título do livro a ser alterado:")
+livro14 = Livro("Star Wars: Marcas da Guerra", "Chuck Wendig", "Ação", 2015)
+livro15 = Livro("A Bússola de Ouro", "Philip Pullman", "Ação", 1995)
+livro16 = Livro("Ponto de Impacto", "Dan Brown", "Ação", 2001)
 
-    livro_encontrado = None
-    genero_original = None
-    for genero, livros in acervo.items():
-        for livro in livros:
-            if livro.get_Titulo().lower() == titulo.lower():
-                livro_encontrado = livro
-                genero_original = genero
-                break
-        if livro_encontrado:
-            break
+livro17 = Livro("Apologia de Sócrates", "Platão", "Filosofia", -399) 
+livro18 = Livro("O Príncipe", "Maquiavel", "Filosofia", 1532)
+livro19 = Livro("A República", "Platão", "Filosofia", -380)  
+livro20 = Livro("Os Dois Morrem no Final", "Adam Silvera", "Infanto Juvenil", 2017)
+livro21 = Livro("Retórica", "Aristóteles", "Filosofia", -330)  
+livro22 = Livro("O Diário de Anne Frank", "Anne Frank", "História", 1947)
+livro23 = Livro("Sapiens: Uma Breve História da Humanidade", "Yuval Noah Harari", "História", 2011)
 
-    if not livro_encontrado:
-        print("Livro não encontrado")
-        return
+livro24 = Livro("Diário de um Banana", "Jeff Kinney", "Infanto Juvenil", 2007)
+livro25 = Livro("As Crônicas de Nárnia", "C. S. Lewis", "Infanto Juvenil", 1950)
 
-    print("Deixe em branco, assim mantém o valor atual:")
+livro26 = Livro("Pedagogia do Oprimido", "Paulo Freire", "Filosofia", 1968)
+livro27 = Livro("Tópicos", "Aristóteles", "Filosofia", -350)  
+livro28 = Livro("Crítica da Razão Pura", "Immanuel Kant", "Filosofia", 1781)
 
-    novotitulo = input(f"Novo título [{livro_encontrado.get_Titulo()}]:") or livro_encontrado.get_Titulo()
-    novoautor = input(f"Novo autor [{livro_encontrado.get_Autor()}]:") or livro_encontrado.get_Autor()
-    novogenero = input(f"Novo gênero [{livro_encontrado.get_Genero()}]:") or livro_encontrado.get_Genero()
-    novoano = input(f"Novo ano [{livro_encontrado.get_Ano()}]:") or livro_encontrado.get_Ano()
+#-----------------------------//---------------------------------------------------
 
-    if novogenero != genero_original:
-    
-        acervo[genero_original].remove(livro_encontrado)
-        
-        if novogenero in acervo:
-            acervo[novogenero].append(livro_encontrado)
+class Bibliotecário:
+    def __init__(self, nome): #Atributo do objeto (nome).
+        self.__nome = nome
+
+    def ver_acervo(self, acervo): #Método para visualizar o acervo da biblioteca.
+        for livro in acervo:
+            print(f"Título: {livro.get_Titulo()};\nAutor: {livro.get_Autor()};\nGênero: {livro.get_Genero()};\nAno: {livro.get_Ano()};\nDisponível: {livro.get_Disponivel()}")
+    def adicionar_livro(self, acervo, gênero, livro): #Método para adicionar um livro ao acervo.
+
+        if gênero in acervo:
+            acervo[gênero].append(livro)
         else:
-            acervo[novogenero] = [livro_encontrado]
+            acervo[gênero] = [livro]
+        print(f"O livro '{livro.get_Titulo()}' foi adicionado ao acervo.")
 
-    livro_encontrado.set_Titulo(novotitulo)
-    livro_encontrado.set_Autor(novoautor)
-    livro_encontrado.set_Genero(novogenero)
-    if novoano:
-        livro_encontrado.set_Ano(int(novoano))
-    else:
-        livro_encontrado.set_Ano(livro_encontrado.get_Ano())
-    
-    print("Livro atualizado com sucesso!")
-# ==================== VER TODOS ALUGADOS
-def book_book():
-    print("Ver todos os livros alugados")
-    alugados = []
+    def remover_livro(self, acervo, gênero, livro): #Método para remoção de um livro
+        if gênero in acervo and livro in acervo[gênero]:
+            acervo[gênero].remove(livro)
+            print(f"O livro '{livro.get_Titulo()} foi removido do acervo")
 
-    for genero, livros in acervo.items():
-        for livro in livros:
-            if not livro.get_Disponivel():
-                alugados.append(livro)
-
-    if not alugados:
-        print("Nenhum livro foi alugado no momento")
-    else:
-        number = 1
-        for livro in alugados:
-            print(f"{number}: {livro.get_Titulo()} - {livro.get_Genero()}")
-            number += 1
-    os.system("pause")
-    os.system("cls")
+    def get_nome(self):
+        return self.__nome
 
 
 
-# ==================== Devolução
-def devolver_livro_menu(visitante: Visitante):
-    os.system("cls")
-    if visitante.get_qtde_livros() == 0:
-        print("Você não tem livros para devolver.")
-        return
-    
-    print("=== SEUS LIVROS ALUGADOS ===")
-    print(f"Livros alugados: {visitante.get_qtde_livros()}/2")
-    
-    livros = visitante.get_livros_emprestados()
-    for i in range(len(livros)):
-        livro = livros[i]
-        print(f"{i+1}. {livro.get_Titulo()}")
-    
-    escolha = input("\nEscolha o número do livro para devolver: ")
-    
-    if escolha == "1" and len(livros) >= 1:
-        livro = livros[0]
-        visitante.devolver_livro(livro)
-        livro.devolver()
-    elif escolha == "2" and len(livros) >= 2:
-        livro = livros[1]
-        visitante.devolver_livro(livro)
-        livro.devolver()
-        os.system("pause")
-        os.system("cls")
-    else:
-        print("Número inválido.")
-        os.system("pause")
-        os.system("cls")
+class Visitante:
+    def __init__(self, nome): #Atributo do objeto (nome).
+        self.__nome = nome
+        self.__livros_emprestados = []
 
-
-# ==================== Menu Visitante
-def visitor_menu(visitante: Visitante):
-    os.system("cls")
-    while True:
-        number= 1
-        print("=== Bem-vindo visitante ===")
-        
-        for opcao in visit_menu_options:
-                print(f"{number}. {opcao}\n")
-                number += 1
-        menu_question = int(input(f"O que você gostaria de fazer?\n\n--> "))
-        if menu_question == 1:
-            showacervo(visitante)
-            
-        elif menu_question == 2:
-            devolver_livro_menu(visitante)  # ← FUNÇÃO, não método da classe
-            
-        elif menu_question == 3:
-            print("Voltando à tela inicial")
-            break
-        
-
-
-
-
-
-
-
-
-
-# ==================== Cadastrando a pessoa
-
-def cadastro():
-    nome = input("Qual seu nome?\n\n--> ")
-    visitante = Visitante(nome)
-    return visitante
+    def ver_livros_emprestados(self):
+        if not self.__livros_emprestados:
+            print(f"O visitante {self.__nome} não possui livros emprestados.")
+        else:
+            print(f"Livros emprestados por {self.__nome}:")
+            for livro in self.__livros_emprestados:
+                print(f" - {livro.get_Titulo()}")
     
 
-# ==================== Menu Principal
+    def get_livros_emprestados(self):
+        return self.__livros_emprestados
+    
+    def get_qtde_livros(self):
+        return len(self.__livros_emprestados)
 
-def menu():
-    os.system("cls")
-    forma_login = ["Bibliotecario", "Visitante", "Sair"]
-    visitante = cadastro()
+    def set_CPF(self):
+        return self.__CPF
 
-    while True:
-        print("=== Bem-vindo à biblioteca ===")
+    def emprestar_livro(self, livro):
+        self.__livros_emprestados.append(livro)
+        print(f"O visitante {self.__nome} emprestou o livro '{livro.get_Titulo()}'.")
 
-        number = 1
+    def devolver_livro(self, livro):
+        if livro in self.__livros_emprestados:
+            self.__livros_emprestados.remove(livro)
+            print(f"O visitante {self.__nome} devolveu o livro '{livro.get_Titulo()}'.")
+        else:
+            print(f"O visitante {self.__nome} não possui o livro '{livro.get_Titulo()}' emprestado.")
 
-        for login in forma_login:
-            print(f"{number}. {login}")
-            number+=1
-
-        login_escolhido = int(input("Como você gostaria de entrar? (Aperte 3 para sair)\n\n--> "))
-        if login_escolhido == 1:
-            print(f"Você entrou como {forma_login[0]}")
-            os.system("pause")
-            os.system("cls")
-            login = forma_login[0]
-        elif login_escolhido == 2:
-            visitor_menu(visitante)
-            print(f"Você entrou como {forma_login[1]}")
-            os.system("pause")
-            os.system("cls")
-            login = forma_login[1]
-        elif login_escolhido == 3:
-            os.system("pause")
-            break
-
-        if login_escolhido == 1:
-            os.system("cls")
-            bible_menu()
-        elif login_escolhido == 2:
-            os.system("cls")
-            visitor_menu(visitante)
+    def reservar_livro(self, livro):
+        if livro not in self.__livros_emprestados:
+            self.__livros_emprestados.append(livro)
+            print(f"O visitante {self.__nome} reservou o livro '{livro.get_Titulo()}'.")
+        else:
+            print(f"O visitante {self.__nome} já possui o livro '{livro.get_Titulo()}' emprestado.")
+    
+    def get_nome(self):
+        return self.__nome
+    
