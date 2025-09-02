@@ -15,6 +15,12 @@ class Livro:
     def get_Genero(self):
         return self.__genero
     
+    def get_Autor(self):
+        return self.__autor
+    
+    def get_Ano(self):
+        return self.__ano
+    
     def emprestar(self):
         if self.__disponivel:
             self.__disponivel = False
@@ -103,6 +109,12 @@ class Visitante:
             for livro in self.__livros_emprestados:
                 print(f" - {livro.get_Titulo()}")
 
+    def get_livros_emprestados(self):
+        return self.__livros_emprestados
+    
+    def get_qtde_livros(self):
+        return len(self.__livros_emprestados)
+
     def emprestar_livro(self, livro):
         self.__livros_emprestados.append(livro)
         print(f"O visitante {self.__nome} emprestou o livro '{livro.get_Titulo()}'.")
@@ -120,3 +132,7 @@ class Visitante:
             print(f"O visitante {self.__nome} reservou o livro '{livro.get_Titulo()}'.")
         else:
             print(f"O visitante {self.__nome} já possui o livro '{livro.get_Titulo()}' emprestado.")
+    
+    def get_nome(self):
+        return self.__nome
+    
