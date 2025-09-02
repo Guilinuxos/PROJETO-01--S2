@@ -99,8 +99,8 @@ def showacervo(visitante=None):
                 status = "Indisponível"
             print(f"- {livro.get_Titulo()} | {livro.get_Autor()} | {livro.get_Ano()} | {status}")
         print()
-        os.system("pause")
-        os.system("cls")
+    os.system("pause")
+    os.system("cls")
     
     if visitante:
         rent_book(visitante)
@@ -238,10 +238,9 @@ def book_book():
 
 # ==================== Devolução
 def devolver_livro_menu(visitante: Visitante):
+    os.system("cls")
     if visitante.get_qtde_livros() == 0:
         print("Você não tem livros para devolver.")
-        os.system("pause")
-        os.system("cls")
         return
     
     print("=== SEUS LIVROS ALUGADOS ===")
@@ -256,11 +255,11 @@ def devolver_livro_menu(visitante: Visitante):
     
     if escolha == "1" and len(livros) >= 1:
         livro = livros[0]
-        visitante.devolver_livro(livro)  # ← Aqui sim passa um livro
+        visitante.devolver_livro(livro)
         livro.devolver()
     elif escolha == "2" and len(livros) >= 2:
         livro = livros[1]
-        visitante.devolver_livro(livro)  # ← Aqui sim passa um livro
+        visitante.devolver_livro(livro)
         livro.devolver()
         os.system("pause")
         os.system("cls")
@@ -272,6 +271,7 @@ def devolver_livro_menu(visitante: Visitante):
 
 # ==================== Menu Visitante
 def visitor_menu(visitante: Visitante):
+    os.system("cls")
     while True:
         number= 1
         print("=== Bem-vindo visitante ===")
@@ -310,7 +310,8 @@ def cadastro():
 # ==================== Menu Principal
 
 def menu():
-    forma_login = ["Bibliotecario", "Visitante"]
+    os.system("cls")
+    forma_login = ["Bibliotecario", "Visitante", "Sair"]
     visitante = cadastro()
 
     while True:
@@ -322,7 +323,7 @@ def menu():
             print(f"{number}. {login}")
             number+=1
 
-        login_escolhido = int(input("Como você gostaria de entrar?\n\n--> "))
+        login_escolhido = int(input("Como você gostaria de entrar? (Aperte 3 para sair)\n\n--> "))
         if login_escolhido == 1:
             print(f"Você entrou como {forma_login[0]}")
             os.system("pause")
@@ -334,12 +335,13 @@ def menu():
             os.system("pause")
             os.system("cls")
             login = forma_login[1]
+        elif login_escolhido == 3:
+            os.system("pause")
+            break
 
         if login_escolhido == 1:
-            os.system("pause")
             os.system("cls")
             bible_menu()
         elif login_escolhido == 2:
-            os.system("pause")
             os.system("cls")
             visitor_menu(visitante)
