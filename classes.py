@@ -115,8 +115,9 @@ class Bibliotecário:
 
 
 class Visitante:
-    def __init__(self, nome): #Atributo do objeto (nome).
+    def __init__(self, nome, CPF): #Atributo do objeto (nome).
         self.__nome = nome
+        self.__CPF = CPF
         self.__livros_emprestados = []
 
     def ver_livros_emprestados(self):
@@ -126,6 +127,9 @@ class Visitante:
             print(f"Livros emprestados por {self.__nome}:")
             for livro in self.__livros_emprestados:
                 print(f" - {livro.get_Titulo()}")
+    
+    def get_CPF(self):
+        return self.__CPF
 
     def get_livros_emprestados(self):
         return self.__livros_emprestados
