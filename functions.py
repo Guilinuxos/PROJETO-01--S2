@@ -1,7 +1,7 @@
 import os
 from classes import *
 
-admin_menu_options = ["Acessar acervo", "Adicionar livros", "Remover Livros", "Alterar informações de livros", "Sair"]
+admin_menu_options = ["Acessar acervo", "Adicionar livros", "Remover Livros", "Alterar informações de livros", "Ver livros alugados", "Sair"]
 visit_menu_options = ["Acessar acervo", "Conferir livros alugados", "Sair"]
 acervo = {
     "Romance": [livro1, livro2, livro3],
@@ -102,21 +102,124 @@ def bible_menu():
         print("=== Bem-vindo bibliotecário ===")
 
         for opcao in admin_menu_options:
-            print(f"{number}. {opcao}\n")
-            number+=1
+            print(f"{number}. {opcao}")
+            number += 1
 
-        menu_question = int(input("O que você gostaria de fazer?\n\n--> "))
+        menu_question = int(input("\nO que você gostaria de fazer?\n\n--> "))
+        
         if menu_question == 1:
-            pass
+            showacervo()  # Acessar acervo
+            
         elif menu_question == 2:
-            pass
+            add_livro()  # Adicionar livros
+            
         elif menu_question == 3:
-            pass
+            remover_livro()  # Remover Livros
+            
         elif menu_question == 4:
-            pass
+            alterar_livro()  # Alterar informações de livros
+            
         elif menu_question == 5:
+            book_book()  # Ver livros alugados
+            
+        elif menu_question == 6: #sair
             print("Saindo...")
             break
+            
+        else:
+            print("Opção inválida. Tente novamente.")
+# ==================== Add Livro
+def add_livro():                      
+    print("Adicionar novo livro")
+    titulo = input("Título:")
+    autor = input("Autor:")
+    genero = input("Gênero:")
+    ano = int(input("Ano:"))
+
+    novo_livro = Livro(titulo, autor, genero, ano)
+
+    if genero in acervo:
+        acervo[genero].append(novo_livro)
+    else:
+        acervo[genero] = [novo_livro]
+
+    print(f"Livro '{titulo}' adicionado ao acervo")
+
+# ==================== Remover Livro
+def remover_livro():
+    print("Remover Livro")
+    titulo = input("Digite o título do livro a ser removido:")
+
+    for genero, livros in acervo.items():
+        for livro in livros:
+            if livro.get_Titulo().lower() == titulo.lower():
+                livros.remove(livro)
+                print(f"Livro '{titulo}' removido")
+                return
+    print("Livro não encontrado")
+# ==================== Alterar Livro
+def alterar_livro():    
+    print("Alterar informações do livro")
+    titulo = input("Digite o título do livro a ser alterado:")
+
+    livro_encontrado = None
+    genero_original = None
+    for genero, livros in acervo.items():
+        for livro in livros:
+            if livro.get_Titulo().lower() == titulo.lower():
+                livro_encontrado = livro
+                genero_original = genero
+                break
+        if livro_encontrado:
+            break
+
+    if not livro_encontrado:
+        print("Livro não encontrado")
+        return
+
+    print("Deixe em branco, assim mantém o valor atual:")
+
+    novotitulo = input(f"Novo título [{livro_encontrado.get_Titulo()}]:") or livro_encontrado.get_Titulo()
+    novoautor = input(f"Novo autor [{livro_encontrado.get_Autor()}]:") or livro_encontrado.get_Autor()
+    novogenero = input(f"Novo gênero [{livro_encontrado.get_Genero()}]:") or livro_encontrado.get_Genero()
+    novoano = input(f"Novo ano [{livro_encontrado.get_Ano()}]:") or livro_encontrado.get_Ano()
+
+    if novogenero != genero_original:
+    
+        acervo[genero_original].remove(livro_encontrado)
+        
+        if novogenero in acervo:
+            acervo[novogenero].append(livro_encontrado)
+        else:
+            acervo[novogenero] = [livro_encontrado]
+
+    livro_encontrado.set_Titulo(novotitulo)
+    livro_encontrado.set_Autor(novoautor)
+    livro_encontrado.set_Genero(novogenero)
+    if novoano:
+        livro_encontrado.set_Ano(int(novoano))
+    else:
+        livro_encontrado.set_Ano(livro_encontrado.get_Ano())
+    
+    print("Livro atualizado com sucesso!")
+# ==================== VER TODOS ALUGADOS
+def book_book():
+    print("Ver todos os livros alugados")
+    alugados = []
+
+    for genero, livros in acervo.items():
+        for livro in livros:
+            if not livro.get_Disponivel():
+                alugados.append(livro)
+
+    if not alugados:
+        print("Nenhum livro foi alugado no momento")
+    else:
+        number = 1
+        for livro in alugados:
+            print(f"{number}: {livro.get_Titulo()} - {livro.get_Genero()}")
+            number += 1
+
 
 
 # ==================== Devolução
@@ -209,6 +312,6 @@ def menu():
             login = forma_login[1]
 
         if login_escolhido == 1:
-            pass
+            bible_menu()
         elif login_escolhido == 2:
             visitor_menu(visitante)
