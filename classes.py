@@ -137,6 +137,9 @@ class Visitante:
     def get_qtde_livros(self):
         return len(self.__livros_emprestados)
 
+    def set_CPF(self):
+        return self.__CPF
+
     def emprestar_livro(self, livro):
         self.__livros_emprestados.append(livro)
         print(f"O visitante {self.__nome} emprestou o livro '{livro.get_Titulo()}'.")
