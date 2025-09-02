@@ -38,22 +38,19 @@ def rent_book(visitante):
         found_book = False
         quest = int(input("Gostaria de alugar um livro?\n1. Sim\n2. Não\n\n--> "))
         if quest == 1:
-            rent_book = input("Escolha e escreva o título do livro da lista acima para alugar\n\n--> ")
+            rent_book_title = input("Escolha e escreva o título do livro da lista acima para alugar\n\n--> ")
 
-            for livro in acervo:
-                if rent_book.lower() == livro.get_Titulo().lower():
-                    found_book = True
-
-                    if livro.get_Disponivel():
-                        visitante.emprestar_livro(livro)
-                        livro.emprestar()
+            for genero in acervo.values():
+                for livro in genero:
+                    if rent_book_title.lower() == livro.get_Titulo() .lower():
+                        found_book = True
+                        if livro.get_Disponivel():
+                            visitante.emprestar_livro(livro)
+                            livro.emprestar()
+                            return
                         break
-                    else:
-                        print("O livro já está sendo alugado")
-                    break
-
-            if found_book == False:
-                print("O livro já está sendo alugado ou não existe")    
+            if not found_book:
+                print("Livro não encontrado")    
 
         elif quest == 2:
             print("Retornando à página inicial...")
@@ -64,7 +61,7 @@ def rent_book(visitante):
 
 
 
-def showacervo(visitante = None):
+def showacervo(visitante=None):
     print("Acervo da biblioteca:\n")
     for genero, livros in acervo.items():
         print(f"== {genero} ==")
@@ -75,30 +72,11 @@ def showacervo(visitante = None):
                 status = "Disponível"
             else:
                 status = "Indisponível"
-            # só mostra o que sua classe Livro já suporta
             print(f"- {livro.get_Titulo()} | {livro.get_Autor()} | {livro.get_Ano()} | {status}")
-
         print()
+    
     if visitante:
         rent_book(visitante)
-
-    
-    while True:
-        number = 1
-        print("Acessando acervo...")
-        showacervo()
-
-        acervo_question = int(input("Que gênero você gostaria de acessar?\n\n--> "))
-        genero_escolhido = acervo[acervo_question]
-        print(f"=== {genero_escolhido} ===")
-        for livro in acervo:
-            if livro.get_Genero() == genero_escolhido:
-                print(f"{number}. {livro.get_Titulo()}")
-                number +=1
-            else:
-                pass
-        rent_book(visitante)
-        break
         
 
 
