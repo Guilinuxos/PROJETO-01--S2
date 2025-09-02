@@ -14,26 +14,37 @@ acervo = {
     "Infanto Juvenil": [livro24, livro25]
 }
 # ==================== Conferir livros alugados
-def check_rented():
-    while True:
+def check_rented(visitante = None):
+    if visitante:
+        visitante.ver_livros_emprestados()
+    else:
         rented_books = []
-        counter = 0
         number = 1
-        for livro in acervo:
-            if not livro.get_Disponivel():
-                rented_books.append(livro)
-                counter+=1
+
+        print("Todos os livros alugados\n")
+
+        for genero in acervo.values():
+            for livro in genero:
+                if not livro.get_Disponivel():
+                    rented_books.append(livro)
+
         if not rented_books:
-            print("Nenhum livro foi alugado até o momento.")
+            print("Nenhum livro foi alugado até o momento")
         else:
             for livro in rented_books:
-                print(f"{number}. {livro.get_Titulo()}")
-                number+=1
-        break
+                print(f"{number}: {livro.get_Titulo()}")
+                number += 1
+
         
 
 # ==================== Alugar livro
 def rent_book(visitante):
+
+    if visitante.get_qtde_livros() >= 2:
+        print("Você já atingiu o limite de 2 livros")
+        print("Devolva um livro para pegar outro")
+        return
+    
     while True:
         found_book = False
         quest = int(input("Gostaria de alugar um livro?\n1. Sim\n2. Não\n\n--> "))
@@ -62,6 +73,10 @@ def rent_book(visitante):
 
 
 def showacervo(visitante=None):
+
+    if visitante:
+        print(f"Seus livros alugados: {visitante.get_qtde_livros()})")
+
     print("Acervo da biblioteca:\n")
     for genero, livros in acervo.items():
         print(f"== {genero} ==")
@@ -104,8 +119,32 @@ def bible_menu():
             break
 
 
-
-
+# ==================== Devolução
+def devolver_livro_menu(visitante):
+    if visitante.get_qtde_livros() == 0:
+        print("Você não tem livros para devolver.")
+        return
+    
+    print("=== SEUS LIVROS ALUGADOS ===")
+    print(f"Livros alugados: {visitante.get_qtde_livros()}/2")
+    
+    livros = visitante.get_livros_emprestados()
+    for i in range(len(livros)):
+        livro = livros[i]
+        print(f"{i+1}. {livro.get_Titulo()}")
+    
+    escolha = input("\nEscolha o número do livro para devolver: ")
+    
+    if escolha == "1" and len(livros) >= 1:
+        livro = livros[0]
+        visitante.devolver_livro(livro)  # ← Aqui sim passa um livro
+        livro.devolver()
+    elif escolha == "2" and len(livros) >= 2:
+        livro = livros[1]
+        visitante.devolver_livro(livro)  # ← Aqui sim passa um livro
+        livro.devolver()
+    else:
+        print("Número inválido.")
 
 
 # ==================== Menu Visitante
@@ -122,8 +161,8 @@ def visitor_menu(visitante: Visitante):
             showacervo(visitante)
             
         elif menu_question == 2:
-            visitante.devolver_livro()
-
+            devolver_livro_menu(visitante)  # ← FUNÇÃO, não método da classe
+            
         elif menu_question == 3:
             print("Voltando à tela inicial")
             break
