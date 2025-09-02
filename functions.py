@@ -283,6 +283,9 @@ def visitor_menu(visitante: Visitante):
 
 def cadastro():
     nome = input("Qual seu nome?\n\n--> ")
+    CPF = int(input("Qual o seu CPF?\n\n-->"))
+    while len(CPF) != 11:
+            CPF = int(input("Qual o seu CPF?\n\n-->"))
     visitante = Visitante(nome)
     return visitante
     
