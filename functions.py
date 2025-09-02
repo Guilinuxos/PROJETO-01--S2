@@ -3,16 +3,23 @@ from classes import *
 
 admin_menu_options = ["Acessar acervo", "Adicionar livros", "Remover Livros", "Alterar informações de livros", "Sair"]
 visit_menu_options = ["Acessar acervo", "Conferir livros alugados", "Sair"]
-lista_de_livros = [livro1, livro2, livro3, livro4, livro5, livro6, livro7, livro8, livro9, livro10, livro11, livro12, livro13, livro14, livro15, livro16, livro17, livro18, livro19, livro20, livro21, livro22]
-
-
+acervo = {
+    "Romance": [livro1, livro2, livro3],
+    "Terror": [livro4, livro5, livro6],
+    "Contos": [livro7, livro8, livro9],
+    "Poesia": [livro10, livro11, livro13],
+    "Ação": [livro14, livro15, livro16],
+    "Filosofia": [livro17, livro18, livro19, livro20, livro21, livro26, livro27, livro28],
+    "História": [livro22, livro23],
+    "Infanto Juvenil": [livro24, livro25]
+}
 # ==================== Conferir livros alugados
 def check_rented():
     while True:
         rented_books = []
         counter = 0
         number = 1
-        for livro in lista_de_livros:
+        for livro in acervo:
             if not livro.get_Disponivel():
                 rented_books.append(livro)
                 counter+=1
@@ -33,7 +40,7 @@ def rent_book(visitante):
         if quest == 1:
             rent_book = input("Escolha e escreva o título do livro da lista acima para alugar\n\n--> ")
 
-            for livro in lista_de_livros:
+            for livro in acervo:
                 if rent_book.lower() == livro.get_Titulo().lower():
                     found_book = True
 
@@ -57,30 +64,34 @@ def rent_book(visitante):
 
 
 
-def acervo(visitante):
-    generos_livros = {
-        1: "Romance",
-        2: "Terror",
-        3: "Contos",
-        4: "Poesia",
-        5: "Ação",
-        6: "Filosofia",
-        7: "História",
-        8: "Infanto Juvenil"
-    }
+def showacervo(visitante = None):
+    print("Acervo da biblioteca:\n")
+    for genero, livros in acervo.items():
+        print(f"== {genero} ==")
+        if not livros:
+            print("Nenhum livro cadastrado")
+        for livro in livros:
+            if livro.get_Disponivel():
+                status = "Disponível"
+            else:
+                status = "Indisponível"
+            # só mostra o que sua classe Livro já suporta
+            print(f"- {livro.get_Titulo()} | {livro.get_Autor()} | {livro.get_Ano()} | {status}")
+
+        print()
+    if visitante:
+        rent_book(visitante)
 
     
     while True:
         number = 1
         print("Acessando acervo...")
-        print("Gêneros disponíveis:")
-        for chave, genero in generos_livros.items():
-            print(f"{chave}. {genero}")
+        showacervo()
 
         acervo_question = int(input("Que gênero você gostaria de acessar?\n\n--> "))
-        genero_escolhido = generos_livros[acervo_question]
+        genero_escolhido = acervo[acervo_question]
         print(f"=== {genero_escolhido} ===")
-        for livro in lista_de_livros:
+        for livro in acervo:
             if livro.get_Genero() == genero_escolhido:
                 print(f"{number}. {livro.get_Titulo()}")
                 number +=1
@@ -130,7 +141,7 @@ def visitor_menu(visitante: Visitante):
                 number += 1
         menu_question = int(input(f"O que você gostaria de fazer?\n\n--> "))
         if menu_question == 1:
-            acervo(visitante)
+            showacervo(visitante)
             
         elif menu_question == 2:
             visitante.devolver_livro()
@@ -176,6 +187,7 @@ def menu():
             print(f"Você entrou como {forma_login[0]}")
             login = forma_login[0]
         elif login_escolhido == 2:
+            visitor_menu(visitante)
             print(f"Você entrou como {forma_login[1]}")
             login = forma_login[1]
 
